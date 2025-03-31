@@ -35,13 +35,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
-@RequiredArgsConstructor
 @Tag(name = "Member API", description = "회원 가입 및 회원 정보 관리를 제공합니다.")
 @RequestMapping("/member")
 public class MemberController {
 
     private final MemberService memberService;
     private final SignUpValidator signUpValidator;
+
+    public MemberController(MemberService memberService, SignUpValidator signUpValidator) {
+        this.memberService = memberService;
+        this.signUpValidator = signUpValidator;
+    }
 
     @PostMapping("/check-email")
     @Operation(

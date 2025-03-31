@@ -9,16 +9,12 @@ import com.OEzoa.OEasy.application.aioe.dto.AioeRequestDTO;
 import com.OEzoa.OEasy.application.aioe.dto.AioeResponseDTO;
 import com.OEzoa.OEasy.application.aioe.dto.ChatHistoryDTO;
 import com.OEzoa.OEasy.application.aioe.validator.AioeValidator;
-import com.OEzoa.OEasy.application.member.MemberService;
 import com.OEzoa.OEasy.application.member.TokenValidator;
-import com.OEzoa.OEasy.domain.aioe.AioeUsage;
 import com.OEzoa.OEasy.domain.member.Member;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,19 +26,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/aioe")
 @Tag(name = "AI OE API", description = "서비스 챗봇 AI OE로 응답메세지를 생성합니다.")
 public class AioeController {
 
-    @Autowired
-    private AioeService aioeService;
-    @Autowired
-    private TokenValidator tokenValidator;
-    @Autowired
-    private AioeUsageService aioeUsageService;
-    @Autowired
-    private AioeValidator aioeValidator;
+    private final AioeService aioeService;
+    private final TokenValidator tokenValidator;
+    private final AioeUsageService aioeUsageService;
+    private final AioeValidator aioeValidator;
+
+    public AioeController(
+            AioeService aioeService,
+            TokenValidator tokenValidator,
+            AioeUsageService aioeUsageService,
+            AioeValidator aioeValidator) {
+        this.aioeService = aioeService;
+        this.tokenValidator = tokenValidator;
+        this.aioeUsageService = aioeUsageService;
+        this.aioeValidator = aioeValidator;
+    }
 
     // 챗봇 시작
     @PostMapping("/start")
