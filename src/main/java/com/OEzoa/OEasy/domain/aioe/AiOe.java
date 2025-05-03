@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 @Getter
 @Entity
@@ -30,10 +31,11 @@ public class AiOe {
     @Column(name = "aioe_pk", nullable = false)
     private Long aioePk;
 
-    @OneToOne (fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_pk", nullable = false)
     private Member member;
 
-    @OneToMany(mappedBy = "aiOe", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @BatchSize(size = 100)
+    @OneToMany(mappedBy = "aiOe", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<AiOeChatMessage> chatMessages;
 }
