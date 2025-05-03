@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: "jdbc:h2:mem:testdb;MODE=MySQL"
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ''
+  sql:
+    init:
+      mode: always
+      schema-locations: "classpath:schema-test.sql"
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        default_schema: "OEASY"
+        format_sql: false        # SQL 포맷팅 비활성화
+        show_sql: false         # 중복 출력 방지
+    show-sql: false            # 중복 출력 방지
+    database-platform: org.hibernate.dialect.H2Dialect
+
+logging:
+  level:
+    org.hibernate:
+      SQL: DEBUG               # SQL 쿼리 로깅
+      type.descriptor.sql: TRACE    # SQL 파라미터 값 로깅
